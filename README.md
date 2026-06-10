@@ -164,6 +164,6 @@ JSON response → animated result card in UI
 
 ## 👤 Author
 
-**Your Name**
+Neha Biju
 B.Tech CSE | ML Internship Project
-[GitHub](https://github.com/YOUR_USERNAME) · [LinkedIn](https://linkedin.com/in/YOUR_USERNAME)
+[GitHub](https://github.com/Nehaxx-26) · [LinkedIn](https://www.linkedin.com/in/nehabiju26/)
