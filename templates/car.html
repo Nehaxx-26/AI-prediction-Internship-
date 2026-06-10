@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Car Price Prediction · AI Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="predict-body">
+
+  <div class="particles" id="particles"></div>
+
+  <!-- Top Nav -->
+  <nav class="top-nav">
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-badge car-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14l2-6h12l2 6"/><rect x="2" y="14" width="20" height="5" rx="2"/><circle cx="7" cy="19" r="2"/><circle cx="17" cy="19" r="2"/></svg>
+      Car Price Prediction
+    </div>
+  </nav>
+
+  <div class="predict-wrapper">
+    <div class="predict-header">
+      <h1 class="predict-title">🚗 Car Price Estimator</h1>
+      <p class="predict-subtitle">Enter the vehicle details to receive an accurate resale price estimate.</p>
+    </div>
+
+    {% if error %}
+    <div class="error-box" style="margin-bottom:1.5rem;">{{ error }}</div>
+    {% endif %}
+
+    <div class="form-result-grid">
+
+      <!-- FORM PANEL -->
+      <div class="form-panel glass-card">
+        <form id="carForm" novalidate>
+
+          <!-- Brand & Classification -->
+          <div class="form-section">
+            <div class="section-header">
+              <span class="section-dot purple-dot"></span>
+              Vehicle Identity
+            </div>
+            <div class="field-grid">
+
+              <div class="field-group">
+                <label for="Brand">Brand <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Brand" name="Brand" required>
+                    <option value="">Select brand...</option>
+                    {% for b in dropdowns.brands %}
+                    <option value="{{ b }}">{{ b }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Year">Manufacturing Year <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="Year" name="Year"
+                    placeholder="e.g. 2018" min="1990" max="2025" step="1" required/>
+                  <span class="input-hint">Between 1990 and 2025</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Body_Type">Body Type <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Body_Type" name="Body_Type" required>
+                    <option value="">Select body type...</option>
+                    {% for b in dropdowns.body_types %}
+                    <option value="{{ b }}">{{ b }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Condition">Vehicle Condition <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Condition" name="Condition" required>
+                    <option value="">Select condition...</option>
+                    {% for c in dropdowns.conditions %}
+                    <option value="{{ c }}">{{ c }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Engine & Specs -->
+          <div class="form-section">
+            <div class="section-header">
+              <span class="section-dot purple-dot"></span>
+              Engine &amp; Drivetrain
+            </div>
+            <div class="field-grid">
+
+              <div class="field-group">
+                <label for="Fuel_Type">Fuel Type <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Fuel_Type" name="Fuel_Type" required>
+                    <option value="">Select fuel type...</option>
+                    {% for f in dropdowns.fuel_types %}
+                    <option value="{{ f }}">{{ f }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Transmission">Transmission <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Transmission" name="Transmission" required>
+                    <option value="">Select transmission...</option>
+                    {% for t in dropdowns.transmissions %}
+                    <option value="{{ t }}">{{ t }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Engine_CC">Engine Displacement <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="Engine_CC" name="Engine_CC"
+                    placeholder="e.g. 2000" min="500" max="8000" required/>
+                  <span class="input-hint">In cubic centimetres (cc)</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Horsepower">Horsepower <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="Horsepower" name="Horsepower"
+                    placeholder="e.g. 150" min="30" max="800" required/>
+                  <span class="input-hint">In bhp / hp</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Usage History -->
+          <div class="form-section">
+            <div class="section-header">
+              <span class="section-dot purple-dot"></span>
+              Usage &amp; History
+            </div>
+            <div class="field-grid">
+
+              <div class="field-group">
+                <label for="Mileage_km">Total Mileage <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="Mileage_km" name="Mileage_km"
+                    placeholder="e.g. 45000" min="0" max="500000" required/>
+                  <span class="input-hint">In kilometres</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Num_Owners">Number of Previous Owners <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="Num_Owners" name="Num_Owners"
+                    placeholder="e.g. 1" min="1" max="10" step="1" required/>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Accidents_Reported">Accidents Reported <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="Accidents_Reported" name="Accidents_Reported"
+                    placeholder="0" min="0" max="10" step="1" required/>
+                  <span class="input-hint">Enter 0 if none</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Service_History">Full Service History <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Service_History" name="Service_History" required>
+                    <option value="">Select...</option>
+                    <option value="1">Yes — Full service records</option>
+                    <option value="0">No — Partial / none</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Insurance_Valid">Insurance Valid <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Insurance_Valid" name="Insurance_Valid" required>
+                    <option value="">Select...</option>
+                    <option value="1">Yes — Currently insured</option>
+                    <option value="0">No — Not insured</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Physical Specs -->
+          <div class="form-section">
+            <div class="section-header">
+              <span class="section-dot purple-dot"></span>
+              Physical Specifications
+            </div>
+            <div class="field-grid half-grid">
+
+              <div class="field-group">
+                <label for="Doors">Number of Doors <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Doors" name="Doors" required>
+                    <option value="">Select...</option>
+                    <option value="2">2 doors</option>
+                    <option value="3">3 doors</option>
+                    <option value="4">4 doors</option>
+                    <option value="5">5 doors</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Seats">Seating Capacity <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Seats" name="Seats" required>
+                    <option value="">Select...</option>
+                    <option value="2">2 seats</option>
+                    <option value="4">4 seats</option>
+                    <option value="5">5 seats</option>
+                    <option value="6">6 seats</option>
+                    <option value="7">7 seats</option>
+                    <option value="8">8 seats</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Error -->
+          <div id="carError" class="error-box hidden"></div>
+
+          <!-- Submit -->
+          <button type="submit" class="predict-btn car-btn" id="carSubmit">
+            <span class="btn-text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Predict Car Price
+            </span>
+            <span class="btn-loading hidden">
+              <span class="spinner"></span> Analyzing…
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <!-- RESULT PANEL -->
+      <div class="result-panel" id="carResult">
+        <div class="result-placeholder">
+          <svg class="placeholder-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 28L16 8h32l8 20"/><rect x="4" y="28" width="56" height="16" rx="4"/>
+            <circle cx="16" cy="52" r="6"/><circle cx="48" cy="52" r="6"/>
+          </svg>
+          <p>Your predicted price will appear here</p>
+        </div>
+      </div>
+
+    </div><!-- end grid -->
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

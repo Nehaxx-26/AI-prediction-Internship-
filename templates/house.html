@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>House Price Prediction · AI Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="predict-body">
+
+  <div class="particles" id="particles"></div>
+
+  <!-- Top Nav -->
+  <nav class="top-nav">
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      Dashboard
+    </a>
+    <div class="nav-badge house-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L12 3l9 8v9H15v-6H9v6H3z"/></svg>
+      House Price Prediction
+    </div>
+  </nav>
+
+  <div class="predict-wrapper">
+    <div class="predict-header">
+      <h1 class="predict-title">🏠 House Price Estimator</h1>
+      <p class="predict-subtitle">Fill in the property details below to get an instant AI-powered price prediction.</p>
+    </div>
+
+    <div class="form-result-grid">
+
+      <!-- FORM PANEL -->
+      <div class="form-panel glass-card">
+        <form id="houseForm" novalidate>
+
+          <!-- Numeric Section -->
+          <div class="form-section">
+            <div class="section-header">
+              <span class="section-dot blue-dot"></span>
+              Property Specifications
+            </div>
+
+            <div class="field-grid">
+              <div class="field-group">
+                <label for="OverallQual">Overall Quality <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="OverallQual" name="OverallQual"
+                    placeholder="1–10" min="1" max="10" step="1" required/>
+                  <span class="input-hint">Rate 1 (Very Poor) to 10 (Excellent)</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="GrLivArea">Above Ground Living Area <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="GrLivArea" name="GrLivArea"
+                    placeholder="e.g. 1500" min="300" max="10000" required/>
+                  <span class="input-hint">In square feet</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="TotalBsmtSF">Total Basement Area <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="TotalBsmtSF" name="TotalBsmtSF"
+                    placeholder="e.g. 900" min="0" max="8000" required/>
+                  <span class="input-hint">In square feet (0 if no basement)</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="1stFlrSF">First Floor Area <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="1stFlrSF" name="1stFlrSF"
+                    placeholder="e.g. 1000" min="100" max="6000" required/>
+                  <span class="input-hint">In square feet</span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="TotRmsAbvGrd">Total Rooms Above Ground <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="number" id="TotRmsAbvGrd" name="TotRmsAbvGrd"
+                    placeholder="e.g. 7" min="2" max="20" step="1" required/>
+                  <span class="input-hint">Excludes bathrooms</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Categorical Section -->
+          <div class="form-section">
+            <div class="section-header">
+              <span class="section-dot blue-dot"></span>
+              Property Classification
+            </div>
+
+            <div class="field-grid">
+              <div class="field-group">
+                <label for="MSZoning">Zoning Classification <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="MSZoning" name="MSZoning" required>
+                    <option value="">Select zone...</option>
+                    <option value="RL">RL — Residential Low Density</option>
+                    <option value="RM">RM — Residential Medium Density</option>
+                    <option value="FV">FV — Floating Village Residential</option>
+                    <option value="RH">RH — Residential High Density</option>
+                    <option value="C (all)">C (all) — Commercial</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="BldgType">Building Type <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="BldgType" name="BldgType" required>
+                    <option value="">Select type...</option>
+                    <option value="1Fam">Single-Family Detached</option>
+                    <option value="2fmCon">Two-Family Conversion</option>
+                    <option value="Duplex">Duplex</option>
+                    <option value="TwnhsE">Townhouse End Unit</option>
+                    <option value="Twnhs">Townhouse Inside Unit</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="KitchenQual">Kitchen Quality <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="KitchenQual" name="KitchenQual" required>
+                    <option value="">Select quality...</option>
+                    <option value="Ex">Excellent</option>
+                    <option value="Gd">Good</option>
+                    <option value="TA">Typical / Average</option>
+                    <option value="Fa">Fair</option>
+                    <option value="Po">Poor</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="SaleCondition">Sale Condition <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="SaleCondition" name="SaleCondition" required>
+                    <option value="">Select condition...</option>
+                    <option value="Normal">Normal Sale</option>
+                    <option value="Partial">Partial — Home not completed at sale</option>
+                    <option value="Abnorml">Abnormal — Foreclosure / Short Sale</option>
+                    <option value="Family">Family — Between family members</option>
+                    <option value="Alloca">Allocation</option>
+                    <option value="AdjLand">Adjoining Land Purchase</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Heating">Heating Type <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Heating" name="Heating" required>
+                    <option value="">Select heating...</option>
+                    <option value="GasA">Gas forced warm air furnace</option>
+                    <option value="GasW">Gas hot water / steam heat</option>
+                    <option value="Grav">Gravity furnace</option>
+                    <option value="Wall">Wall furnace</option>
+                    <option value="OthW">Hot water / steam heat (other)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="LandSlope">Land Slope <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="LandSlope" name="LandSlope" required>
+                    <option value="">Select slope...</option>
+                    <option value="Gtl">Gentle slope</option>
+                    <option value="Mod">Moderate slope</option>
+                    <option value="Sev">Severe slope</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label for="Utilities">Utilities Available <span class="req">*</span></label>
+                <div class="select-wrap">
+                  <select id="Utilities" name="Utilities" required>
+                    <option value="">Select utilities...</option>
+                    <option value="AllPub">All Public Utilities</option>
+                    <option value="NoSeWa">Electricity and Gas Only</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error display -->
+          <div id="houseError" class="error-box hidden"></div>
+
+          <!-- Submit -->
+          <button type="submit" class="predict-btn house-btn" id="houseSubmit">
+            <span class="btn-text">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Predict House Price
+            </span>
+            <span class="btn-loading hidden">
+              <span class="spinner"></span> Analyzing…
+            </span>
+          </button>
+        </form>
+      </div>
+
+      <!-- RESULT PANEL -->
+      <div class="result-panel" id="houseResult">
+        <div class="result-placeholder">
+          <svg class="placeholder-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M8 30L32 8L56 30V56H40V40H24V56H8V30Z"/>
+          </svg>
+          <p>Your predicted price will appear here</p>
+        </div>
+      </div>
+
+    </div><!-- end grid -->
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

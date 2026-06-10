@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Prediction Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body class="landing-body">
+
+  <!-- Animated background particles -->
+  <div class="particles" id="particles"></div>
+
+  <div class="landing-wrapper">
+    <!-- Header -->
+    <header class="landing-header">
+      <div class="logo-badge">AI</div>
+      <div>
+        <h1 class="landing-title">Prediction Dashboard</h1>
+        <p class="landing-subtitle">Machine Learning · Powered by Gradient Boosting</p>
+      </div>
+    </header>
+
+    <!-- Cards -->
+    <div class="module-grid">
+
+      <!-- House Card -->
+      <a href="/house" class="module-card" id="house-card">
+        <div class="card-glow glow-blue"></div>
+        <div class="card-icon-wrap house-icon-wrap">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 22L24 6L42 22V42H30V30H18V42H6V22Z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <rect x="20" y="30" width="8" height="12" rx="1" stroke="currentColor" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <span class="card-tag">Module 01</span>
+          <h2 class="card-title">House Price<br/>Prediction</h2>
+          <p class="card-desc">Predict residential property market value using structural features, location zones, and quality ratings.</p>
+          <div class="card-stats">
+            <span class="stat-pill">GradientBoosting</span>
+            <span class="stat-pill">8 Features</span>
+            <span class="stat-pill">StandardScaler</span>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Car Card -->
+      <a href="/car" class="module-card" id="car-card">
+        <div class="card-glow glow-purple"></div>
+        <div class="card-icon-wrap car-icon-wrap">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 28L12 16H36L40 28" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+            <rect x="6" y="28" width="36" height="10" rx="3" stroke="currentColor" stroke-width="2.5"/>
+            <circle cx="14" cy="38" r="4" stroke="currentColor" stroke-width="2.5"/>
+            <circle cx="34" cy="38" r="4" stroke="currentColor" stroke-width="2.5"/>
+            <path d="M18 24H30" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-content">
+          <span class="card-tag">Module 02</span>
+          <h2 class="card-title">Car Price<br/>Prediction</h2>
+          <p class="card-desc">Estimate used vehicle resale value based on brand, mileage, condition, engine specs, and ownership history.</p>
+          <div class="card-stats">
+            <span class="stat-pill">GradientBoosting</span>
+            <span class="stat-pill">16 Features</span>
+            <span class="stat-pill">Feature Engineering</span>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+
+    <footer class="landing-footer">
+      Built with Flask · scikit-learn · GradientBoosting · Python
+    </footer>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
