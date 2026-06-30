@@ -11,7 +11,6 @@
 
   <div class="particles" id="particles"></div>
 
-  <!-- Top Nav -->
   <nav class="top-nav">
     <a href="/" class="nav-back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
@@ -31,11 +30,9 @@
 
     <div class="form-result-grid">
 
-      <!-- FORM PANEL -->
       <div class="form-panel glass-card">
         <form id="houseForm" novalidate>
 
-          <!-- Numeric Section -->
           <div class="form-section">
             <div class="section-header">
               <span class="section-dot blue-dot"></span>
@@ -90,7 +87,6 @@
             </div>
           </div>
 
-          <!-- Categorical Section -->
           <div class="form-section">
             <div class="section-header">
               <span class="section-dot blue-dot"></span>
@@ -194,10 +190,8 @@
             </div>
           </div>
 
-          <!-- Error display -->
           <div id="houseError" class="error-box hidden"></div>
 
-          <!-- Submit -->
           <button type="submit" class="predict-btn house-btn" id="houseSubmit">
             <span class="btn-text">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -210,7 +204,6 @@
         </form>
       </div>
 
-      <!-- RESULT PANEL -->
       <div class="result-panel" id="houseResult">
         <div class="result-placeholder">
           <svg class="placeholder-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -220,7 +213,7 @@
         </div>
       </div>
 
-    </div><!-- end grid -->
+    </div>
   </div>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
