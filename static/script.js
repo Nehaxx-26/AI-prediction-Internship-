@@ -1,21 +1,11 @@
-/* ═══════════════════════════════════════════════════════════════════════════
-   AI Prediction Dashboard — script.js
-   Handles: particles, form submission, result display, validation
-═══════════════════════════════════════════════════════════════════════════ */
-
 "use strict";
-
-/* ── Animated Particles ──────────────────────────────────────────────────── */
 (function initParticles() {
   const container = document.getElementById("particles");
   if (!container) return;
-
   const COUNT = window.innerWidth < 600 ? 25 : 50;
-
   for (let i = 0; i < COUNT; i++) {
     const p = document.createElement("div");
     p.className = "particle";
-
     const size = Math.random() * 3 + 1;
     p.style.cssText = `
       left: ${Math.random() * 100}%;
@@ -30,8 +20,6 @@
   }
 })();
 
-
-/* ── Utility: collect form data as plain object ─────────────────────────── */
 function collectFormData(form) {
   const data = {};
   const elements = form.querySelectorAll("input, select");
@@ -41,12 +29,10 @@ function collectFormData(form) {
   return data;
 }
 
-/* ── Utility: mark/clear field errors ──────────────────────────────────── */
 function clearFieldErrors(form) {
   form.querySelectorAll(".field-error").forEach(el => el.classList.remove("field-error"));
 }
 
-/* ── Utility: show inline error ─────────────────────────────────────────── */
 function showError(boxId, message) {
   const box = document.getElementById(boxId);
   if (!box) return;
@@ -60,7 +46,6 @@ function clearError(boxId) {
   if (box) { box.textContent = ""; box.classList.add("hidden"); }
 }
 
-/* ── Utility: set button loading state ──────────────────────────────────── */
 function setLoading(btnId, isLoading) {
   const btn = document.getElementById(btnId);
   if (!btn) return;
@@ -76,12 +61,10 @@ function setLoading(btnId, isLoading) {
   }
 }
 
-/* ── Utility: format number with commas ─────────────────────────────────── */
 function formatNumber(num) {
   return new Intl.NumberFormat("en-US").format(Math.round(num));
 }
 
-/* ── Build Result Card HTML ──────────────────────────────────────────────── */
 function buildResultCard(formatted, prediction, type, meta) {
   const colorClass   = type === "house" ? "blue" : "purple";
   const amountClass  = type === "house" ? "blue-text" : "purple-text";
@@ -110,7 +93,6 @@ function buildResultCard(formatted, prediction, type, meta) {
   `;
 }
 
-/* ── Show Prediction Result ──────────────────────────────────────────────── */
 function showResult(panelId, formatted, prediction, type, meta) {
   const panel = document.getElementById(panelId);
   if (!panel) return;
@@ -119,9 +101,6 @@ function showResult(panelId, formatted, prediction, type, meta) {
   panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   HOUSE PRICE FORM
-═══════════════════════════════════════════════════════════════════════════ */
 const houseForm = document.getElementById("houseForm");
 if (houseForm) {
   houseForm.addEventListener("submit", async function (e) {
@@ -131,7 +110,6 @@ if (houseForm) {
 
     const data = collectFormData(houseForm);
 
-    // Client-side validation
     const errors = [];
     const numericChecks = [
       { key: "OverallQual", label: "Overall Quality", min: 1, max: 10, integer: true },
@@ -201,9 +179,6 @@ if (houseForm) {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CAR PRICE FORM
-═══════════════════════════════════════════════════════════════════════════ */
 const carForm = document.getElementById("carForm");
 if (carForm) {
   carForm.addEventListener("submit", async function (e) {
@@ -213,7 +188,6 @@ if (carForm) {
 
     const data = collectFormData(carForm);
 
-    // Client-side validation
     const errors = [];
     const numericChecks = [
       { key: "Year",               label: "Manufacturing Year",       min: 1990, max: 2025, integer: true },
