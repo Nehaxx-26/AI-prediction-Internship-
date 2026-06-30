@@ -14,15 +14,14 @@ def load_artifacts(name):
     if not os.path.exists(path):
         raise FileNotFoundError(f"Model file not found: {path}")
     return joblib.load(path)
-
 try:
     HOUSE = load_artifacts("house")
     CAR   = load_artifacts("car")
-    print("✅ Both models loaded successfully.")
+    print("Both models loaded successfully.")
 except Exception as e:
-    print(f"❌ Model load error: {e}")
+    print(f" Model load error: {e}")
     HOUSE = CAR = None
-
+    
 @app.route("/")
 def index():
     return render_template("index.html")
