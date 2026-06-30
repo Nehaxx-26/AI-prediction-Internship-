@@ -8,10 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 </head>
 <body class="predict-body">
-
   <div class="particles" id="particles"></div>
-
-  <!-- Top Nav -->
   <nav class="top-nav">
     <a href="/" class="nav-back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
@@ -34,12 +31,9 @@
     {% endif %}
 
     <div class="form-result-grid">
-
-      <!-- FORM PANEL -->
       <div class="form-panel glass-card">
         <form id="carForm" novalidate>
 
-          <!-- Brand & Classification -->
           <div class="form-section">
             <div class="section-header">
               <span class="section-dot purple-dot"></span>
@@ -95,7 +89,6 @@
             </div>
           </div>
 
-          <!-- Engine & Specs -->
           <div class="form-section">
             <div class="section-header">
               <span class="section-dot purple-dot"></span>
@@ -148,7 +141,6 @@
             </div>
           </div>
 
-          <!-- Usage History -->
           <div class="form-section">
             <div class="section-header">
               <span class="section-dot purple-dot"></span>
@@ -207,7 +199,6 @@
             </div>
           </div>
 
-          <!-- Physical Specs -->
           <div class="form-section">
             <div class="section-header">
               <span class="section-dot purple-dot"></span>
@@ -223,7 +214,6 @@
                     <option value="2">2 doors</option>
                     <option value="3">3 doors</option>
                     <option value="4">4 doors</option>
-                    <option value="5">5 doors</option>
                   </select>
                 </div>
               </div>
@@ -246,10 +236,8 @@
             </div>
           </div>
 
-          <!-- Error -->
           <div id="carError" class="error-box hidden"></div>
 
-          <!-- Submit -->
           <button type="submit" class="predict-btn car-btn" id="carSubmit">
             <span class="btn-text">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -262,7 +250,6 @@
         </form>
       </div>
 
-      <!-- RESULT PANEL -->
       <div class="result-panel" id="carResult">
         <div class="result-placeholder">
           <svg class="placeholder-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -273,7 +260,7 @@
         </div>
       </div>
 
-    </div><!-- end grid -->
+    </div>
   </div>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
